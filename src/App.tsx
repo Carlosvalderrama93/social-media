@@ -1,32 +1,21 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Navbar from "./app/Navbar";
-import PostsList from "./features/posts/PostsList";
-import AddPostForm from "./features/posts/AddPostForm";
+import Home from "./app/Home";
+import Post from "./features/posts/Post";
+import EditPost from "./features/posts/EditPost";
 
 export default function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Navbar />
       <div className="App">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <PostsList />
-                <AddPostForm />
-              </>
-            }
-          />
+          <Route path="/" element={<Home />} />
+          <Route path="/posts/:postId" element={<Post />} />
+          <Route path="/edit/:postId" element={<EditPost />} />
         </Routes>
-        <Navigate to="/" />
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }

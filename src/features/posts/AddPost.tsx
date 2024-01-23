@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postAdded } from "./postSlice";
-import { nanoid } from "@reduxjs/toolkit";
-
-type VoidFn = (e: any) => void;
 
 function AddPostForm() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const onTitleChanged: VoidFn = (e) => setTitle(e.target.value);
-  const onContentChanged: VoidFn = (e) => setContent(e.target.value);
+  function onTitleChanged(e: React.ChangeEvent<HTMLInputElement>): void {
+    setTitle(e.target.value);
+  }
+  function onContentChanged(e: React.ChangeEvent<HTMLTextAreaElement>): void {
+    setContent(e.target.value);
+  }
 
   function onSavePostClicked() {
     if (title && content) {
-      const arg = { id: nanoid(), title, content };
-      dispatch(postAdded(arg));
+      dispatch(postAdded(title, content));
       setTitle("");
       setContent("");
     }
