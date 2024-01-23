@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { PostType, postUpdated } from "./postSlice";
-import { RootState } from "../../app/store";
-import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+
+import { RootState } from "../../app/store";
+import { postUpdated } from "./postSlice";
+import { PostType } from "./Posts";
 
 function EditPost() {
   const postId = useParams()?.postId;
@@ -28,8 +30,16 @@ function EditPost() {
     setContent(e.target.value);
   }
 
-  function onSavePostClicked() {
-    if (title && content) {
+  function onSavePostClicked({
+    title,
+    content,
+    postId,
+  }: {
+    title: string;
+    content: string;
+    postId: string | undefined;
+  }): void {
+    if (title && content && postId) {
       dispatch(postUpdated({ id: postId, title, content }));
       navigate(`/posts/${postId}`);
     }
@@ -56,7 +66,10 @@ function EditPost() {
           onChange={onContentChanged}
         />
       </form>
-      <button type="button" onClick={onSavePostClicked}>
+      <button
+        type="button"
+        onClick={() => onSavePostClicked({ title, content, postId })}
+      >
         Save Post
       </button>
     </section>

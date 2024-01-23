@@ -1,16 +1,20 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
-
-export type PostType = {
-  id: string;
-  title: string;
-  content: string;
-  user?: string;
-  date?: string;
-};
+import { parseISO, sub } from "date-fns";
+import { PostType } from "./Posts";
 
 const initialState: PostType[] = [
-  { id: "1", title: "First Post!", content: "Hello!" },
-  { id: "2", title: "Second Post", content: "More text" },
+  {
+    id: "1",
+    title: "First Post!",
+    content: "Hello!",
+    date: sub(new Date(), { minutes: 10 }).toString(),
+  },
+  {
+    id: "2",
+    title: "Second Post",
+    content: "More text",
+    date: sub(new Date(), { minutes: 5 }).toString(),
+  },
 ];
 
 const postsSlice = createSlice({
@@ -30,7 +34,7 @@ const postsSlice = createSlice({
       } {
         return {
           payload: {
-            date: new Date().toISOString(),
+            date: parseISO(new Date().toISOString()).toString(),
             id: nanoid(),
             title,
             content,

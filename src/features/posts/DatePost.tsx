@@ -1,16 +1,11 @@
-import { formatDistanceToNow, parseISO } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 
 function DatePost({ timestamp }: { timestamp: string }) {
-  let timeAgo = "";
-  if (timestamp) {
-    const date = parseISO(timestamp);
-    const timePeriod = formatDistanceToNow(date);
-    timeAgo = `${timePeriod} ago`;
-  }
+  const timePeriod = formatDistanceToNow(timestamp);
 
   return (
     <span title={timestamp}>
-      &nbsp; <i>{timeAgo}</i>
+      <i>{`${timePeriod} ago`}</i>
     </span>
   );
 }

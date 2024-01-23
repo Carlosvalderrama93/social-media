@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { postAdded } from "./postSlice";
 import { RootState } from "../../app/store";
 
@@ -18,7 +19,7 @@ function AddPostForm() {
 
   const canSave = Boolean(title) && Boolean(content) && Boolean(userId);
 
-  function onAuthorChanged(e) {
+  function onAuthorChanged(e: React.ChangeEvent<HTMLSelectElement>): void {
     setUserId(e.target.value);
   }
 
@@ -29,7 +30,15 @@ function AddPostForm() {
     setContent(e.target.value);
   }
 
-  function onSavePostClicked() {
+  function onSavePostClicked({
+    title,
+    content,
+    userId,
+  }: {
+    title: string;
+    content: string;
+    userId: string;
+  }): void {
     if (title && content) {
       dispatch(postAdded(title, content, userId));
       setTitle("");
@@ -48,9 +57,15 @@ function AddPostForm() {
           name="postTitle"
           value={title}
           onChange={onTitleChanged}
+          required
         />
         <label htmlFor="postAuthor">Author:</label>
-        <select id="postAuthor" value={userId} onChange={onAuthorChanged}>
+        <select
+          id="postAuthor"
+          value={userId}
+          onChange={onAuthorChanged}
+          required
+        >
           <option value=""></option>
           {usersOptions}
         </select>
@@ -60,8 +75,13 @@ function AddPostForm() {
           name="postContent"
           value={content}
           onChange={onContentChanged}
+          required
         />
-        <button type="button" onClick={onSavePostClicked} disabled={!canSave}>
+        <button
+          type="button"
+          onClick={() => onSavePostClicked({ userId, content, title })}
+          disabled={!canSave}
+        >
           Save Post
         </button>
       </form>
