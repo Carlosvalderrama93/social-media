@@ -2,6 +2,7 @@ import { PostType } from "./postSlice";
 import { Link, useParams } from "react-router-dom";
 
 import getPost from "./getPost";
+import UserPost from "../users/UserPost";
 
 type propsType = {
   data?: PostType;
@@ -24,6 +25,7 @@ function Post({ data, edit = true }: propsType) {
             <Link to={url} className="button muted-button">
               {edit ? "Edit" : "View"} post
             </Link>
+            <UserPost userId={post.user ?? ""} />
           </>
         ) : (
           <h2>Post not found!</h2>

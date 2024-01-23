@@ -4,6 +4,7 @@ export type PostType = {
   id: string;
   title: string;
   content: string;
+  user?: string;
 };
 
 const initialState: PostType[] = [
@@ -21,13 +22,17 @@ const postsSlice = createSlice({
       },
       prepare(
         title: string,
-        content: string
-      ): { payload: { id: string; title: string; content: string } } {
+        content: string,
+        userId: string
+      ): {
+        payload: PostType;
+      } {
         return {
           payload: {
             id: nanoid(),
             title,
             content,
+            user: userId,
           },
         };
       },
