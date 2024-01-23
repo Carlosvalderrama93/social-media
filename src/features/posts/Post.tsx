@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import getPost from "./getPost";
 import UserPost from "../users/UserPost";
+import DatePost from "./DatePost";
 
 type propsType = {
   data?: PostType;
@@ -26,6 +27,7 @@ function Post({ data, edit = true }: propsType) {
               {edit ? "Edit" : "View"} post
             </Link>
             <UserPost userId={post.user ?? ""} />
+            <DatePost timestamp={post.date ?? ""} />
           </>
         ) : (
           <h2>Post not found!</h2>

@@ -5,6 +5,7 @@ export type PostType = {
   title: string;
   content: string;
   user?: string;
+  date?: string;
 };
 
 const initialState: PostType[] = [
@@ -29,6 +30,7 @@ const postsSlice = createSlice({
       } {
         return {
           payload: {
+            date: new Date().toISOString(),
             id: nanoid(),
             title,
             content,

@@ -19,3 +19,10 @@ export default function App() {
     </BrowserRouter>
   );
 }
+<div className="App">
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/posts/:postId" element={<Post />} />
+  <Route path="/edit/:postId" element={<EditPost />} />
+</Routes>
+</div>
