@@ -1,6 +1,8 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 import { parseISO, sub } from "date-fns";
-import { PostType } from "./Posts";
+
+import { PostType } from "./Post";
+import createEmoticons from "./createEmoticons";
 
 const initialState: PostType[] = [
   {
@@ -8,12 +10,14 @@ const initialState: PostType[] = [
     title: "First Post!",
     content: "Hello!",
     date: sub(new Date(), { minutes: 10 }).toString(),
+    reactions: createEmoticons(),
   },
   {
     id: "2",
     title: "Second Post",
     content: "More text",
     date: sub(new Date(), { minutes: 5 }).toString(),
+    reactions: createEmoticons(),
   },
 ];
 
@@ -39,6 +43,7 @@ const postsSlice = createSlice({
             title,
             content,
             user: userId,
+            reactions: createEmoticons(),
           },
         };
       },
@@ -51,9 +56,15 @@ const postsSlice = createSlice({
         post.content = content;
       }
     },
+    reactionAdded(state, action) {
+      const { postId, type: rType } = action.payload;
+      const _Post = state.find((post) => post.id === postId);
+      const reaction = _Post?.reactions.find(({ type }) => type === rType);
+      if (reaction) reaction.total++;
+    },
   },
 });
 
-export const { postAdded, postUpdated } = postsSlice.actions;
+export const { postAdded, postUpdated, reactionAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;

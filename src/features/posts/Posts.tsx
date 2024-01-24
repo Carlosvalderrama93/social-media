@@ -1,15 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 
-import Post from "./Post";
-
-export type PostType = {
-  id: string;
-  title: string;
-  content: string;
-  date: string;
-  user?: string;
-};
+import Post, { PostType } from "./Post";
 
 function PostsList() {
   const posts: PostType[] = useSelector((state: RootState) => state.posts);

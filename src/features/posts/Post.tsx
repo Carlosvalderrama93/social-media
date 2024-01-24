@@ -3,10 +3,20 @@ import { Link, useParams } from "react-router-dom";
 import getPost from "./getPost";
 import UserPost from "../users/UserPost";
 import DatePost from "./DatePost";
-import { PostType } from "./Posts";
+import ReactionButton from "./ReactionButton";
+import { EmoticonsType } from "./createEmoticons";
+
+export type PostType = {
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+  reactions: EmoticonsType[];
+  user?: string;
+};
 
 type propsType = {
-  data: PostType;
+  data?: PostType;
   edit?: boolean;
 };
 
@@ -27,7 +37,8 @@ function Post({ data, edit = true }: propsType) {
               {edit ? "Edit" : "View"} post
             </Link>
             <UserPost userId={post.user ?? ""} />
-            <DatePost timestamp={post.date} />
+            <DatePost timestamp={post.date ?? ""} />
+            <ReactionButton post={post as PostType} />
           </>
         ) : (
           <h2>Post not found!</h2>
